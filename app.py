@@ -5,8 +5,11 @@ from flask import Flask
 from flask import request
 
 app = Flask(__name__)
-app.config.from_json('config.json')
 
+# Load configuration from the config.json file
+with open('config.json') as config_file:
+    app.config.update(json.load(config_file))
+    
 @app.route("/", methods=['GET', 'POST'])
 def index():
     body = request.data
