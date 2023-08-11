@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Load configuration from the config.json file
 with open('config.json') as config_file:
     app.config.update(json.load(config_file))
-    
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
     body = request.data
@@ -28,7 +28,7 @@ def _prepare_response(body):
     comment = task["comments"][-1]
     comment_author = comment["author"]
     author_name = comment_author["first_name"] + " " + comment_author["last_name"]
-    comment_text = "Hello, {}! You said: {}".format(author_name, comment["text"])
+    comment_text = "Hello, {}! You said: {}".format(request.headers, request.data)
     return "{{ \"text\":\"{}\", \"reassign_to\":{{ \"id\":{} }} }}".format(comment_text, comment_author["id"])
 
 if __name__ == "__main__":
